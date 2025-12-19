@@ -4,7 +4,7 @@ class_name BattleAction
 
 var user: Character
 var skill: Skill  # null pour une attaque basique
-var targets: Array[Character] = []
+var targets: Array = []  # Array de Character (non typé pour compatibilité)
 var item: Item  # Pour utiliser un objet
 
 func is_valid() -> bool:

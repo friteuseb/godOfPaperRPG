@@ -354,12 +354,7 @@ func _execute_skill_on_targets(targets: Array) -> void:
 	var action = BattleAction.new()
 	action.user = current_character
 	action.skill = selected_skill
-
-	# Convertir les targets
-	var char_targets: Array[Character] = []
-	for t in targets:
-		char_targets.append(t)
-	action.targets = char_targets
+	action.targets = targets
 
 	BattleManager.execute_action(action)
 
