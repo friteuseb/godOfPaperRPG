@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2game_table"]
+[gd_scene load_steps=4 format=3 uid="uid://c2game_table"]
 
 [ext_resource type="Script" path="res://scripts/ui/game_table.gd" id="1_game_table"]
-[ext_resource type="Theme" path="res://theme/kopp_theme.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/tavern_floor.png" id="3_wood_texture"]
-[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/forest/grass.png" id="4_forest_bg"]
+[ext_resource type="Theme" path="res://theme/game_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/forest/grass.png" id="3_forest_bg"]
 
 [node name="GameTable" type="Control"]
 layout_mode = 3
@@ -15,96 +14,47 @@ grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_game_table")
 
-[node name="RoomLayer" type="Control" parent="."]
+[node name="BackgroundLayer" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="WallBackground" type="ColorRect" parent="RoomLayer"]
+[node name="BaseBackground" type="ColorRect" parent="BackgroundLayer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.25, 0.18, 0.12, 1)
+color = Color(0.12, 0.08, 0.15, 1)
 
-[node name="CandleGlow" type="ColorRect" parent="RoomLayer"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.3
-anchor_right = 0.7
-anchor_bottom = 0.15
-color = Color(1, 0.85, 0.55, 0.08)
-
-[node name="TableLayer" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.02
-anchor_right = 0.98
-anchor_bottom = 0.98
-
-[node name="TableShadow" type="ColorRect" parent="TableLayer"]
+[node name="LocationBackground" type="TextureRect" parent="BackgroundLayer"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 5.0
-offset_bottom = 5.0
-color = Color(0, 0, 0, 0.4)
-
-[node name="TableSurface" type="TextureRect" parent="TableLayer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource("3_wood_texture")
+texture = ExtResource("3_forest_bg")
 expand_mode = 1
 stretch_mode = 2
+modulate = Color(0.6, 0.6, 0.6, 0.4)
 
-[node name="TableOverlay" type="ColorRect" parent="TableLayer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0.35, 0.22, 0.12, 0.7)
-
-[node name="TableBorderOuter" type="ColorRect" parent="TableLayer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color(0.28, 0.18, 0.10, 1)
-
-[node name="TableInner" type="ColorRect" parent="TableLayer"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = -5.0
-color = Color(0.38, 0.26, 0.15, 1)
-
-[node name="ImaginationZone" type="Control" parent="TableLayer"]
+[node name="TableTop" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.08
-anchor_right = 0.98
-anchor_bottom = 0.52
+anchor_left = 0.03
+anchor_top = 0.1
+anchor_right = 0.97
+anchor_bottom = 0.75
 
-[node name="FrameBorderOuter" type="ColorRect" parent="TableLayer/ImaginationZone"]
+[node name="TableSurface" type="ColorRect" parent="TableTop"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.55, 0.42, 0.25, 1)
+color = Color(0.3, 0.2, 0.12, 0.95)
 
-[node name="FrameBorderInner" type="ColorRect" parent="TableLayer/ImaginationZone"]
+[node name="TableBorder" type="ColorRect" parent="TableTop"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,144 +63,183 @@ offset_left = 4.0
 offset_top = 4.0
 offset_right = -4.0
 offset_bottom = -4.0
-color = Color(0.42, 0.30, 0.18, 1)
+color = Color(0.25, 0.15, 0.08, 1)
 
-[node name="AdventureBackground" type="ColorRect" parent="TableLayer/ImaginationZone"]
+[node name="EnvironmentLayer" type="Control" parent="TableTop"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = -6.0
-color = Color(0.12, 0.18, 0.12, 1)
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+mouse_filter = 2
 
-[node name="LocationBackground" type="TextureRect" parent="TableLayer/ImaginationZone"]
+[node name="LeftDecor" type="VBoxContainer" parent="TableTop/EnvironmentLayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.1
+anchor_right = 0.12
+anchor_bottom = 0.9
+theme_override_constants/separation = 5
+
+[node name="RightDecor" type="VBoxContainer" parent="TableTop/EnvironmentLayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88
+anchor_top = 0.1
+anchor_right = 1.0
+anchor_bottom = 0.9
+theme_override_constants/separation = 5
+
+[node name="TopDecor" type="HBoxContainer" parent="TableTop/EnvironmentLayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_right = 0.85
+anchor_bottom = 0.15
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="BottomDecor" type="HBoxContainer" parent="TableTop/EnvironmentLayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.85
+anchor_right = 0.85
+anchor_bottom = 1.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="GameArea" type="Control" parent="TableTop"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 6.0
-offset_right = -6.0
-offset_bottom = -6.0
-texture = ExtResource("4_forest_bg")
-expand_mode = 1
-stretch_mode = 2
-modulate = Color(0.5, 0.6, 0.4, 0.4)
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
 
-[node name="LocationPanel" type="PanelContainer" parent="TableLayer/ImaginationZone"]
+[node name="LocationPanel" type="PanelContainer" parent="TableTop/GameArea"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 10
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -80.0
-offset_top = 8.0
-offset_right = 80.0
-offset_bottom = 35.0
+offset_left = -200.0
+offset_top = 5.0
+offset_right = 200.0
+offset_bottom = 45.0
 grow_horizontal = 2
 
-[node name="LocationLabel" type="Label" parent="TableLayer/ImaginationZone/LocationPanel"]
+[node name="LocationLabel" type="Label" parent="TableTop/GameArea/LocationPanel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.90, 0.75, 1)
-theme_override_font_sizes/font_size = 13
-text = "Foret Sombre"
+theme_override_font_sizes/font_size = 18
+text = "Taverne du Dragon Dore"
 horizontal_alignment = 1
 
-[node name="EnemyArea" type="HBoxContainer" parent="TableLayer/ImaginationZone"]
+[node name="EnemyArea" type="HBoxContainer" parent="TableTop/GameArea"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
 anchor_top = 0.12
 anchor_right = 0.95
-anchor_bottom = 0.50
-theme_override_constants/separation = 8
+anchor_bottom = 0.48
+theme_override_constants/separation = 15
 alignment = 1
 
-[node name="PartyArea" type="HBoxContainer" parent="TableLayer/ImaginationZone"]
+[node name="PartyArea" type="HBoxContainer" parent="TableTop/GameArea"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
 anchor_top = 0.52
 anchor_right = 0.95
-anchor_bottom = 0.95
-theme_override_constants/separation = 8
+anchor_bottom = 0.98
+theme_override_constants/separation = 15
 alignment = 1
 
-[node name="GameMasterZone" type="Control" parent="TableLayer"]
+[node name="GMPanel" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.02
-anchor_top = 0.54
-anchor_right = 0.98
-anchor_bottom = 0.72
+anchor_top = 0.01
+anchor_right = 0.22
+anchor_bottom = 0.08
 
-[node name="GMPanel" type="PanelContainer" parent="TableLayer/GameMasterZone"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="HBox" type="HBoxContainer" parent="TableLayer/GameMasterZone/GMPanel"]
+[node name="HBox" type="HBoxContainer" parent="GMPanel"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="GMSpriteContainer" type="CenterContainer" parent="TableLayer/GameMasterZone/GMPanel/HBox"]
+[node name="GMIcon" type="Label" parent="GMPanel/HBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(60, 0)
+theme_override_font_sizes/font_size = 28
+text = "🎲"
 
-[node name="GMSprite" type="Label" parent="TableLayer/GameMasterZone/GMPanel/HBox/GMSpriteContainer"]
+[node name="GMLabel" type="Label" parent="GMPanel/HBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "🧙"
-horizontal_alignment = 1
-
-[node name="VBox" type="VBoxContainer" parent="TableLayer/GameMasterZone/GMPanel/HBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 2
-
-[node name="GMTitle" type="Label" parent="TableLayer/GameMasterZone/GMPanel/HBox/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 14
 text = "Maitre du Jeu"
 
-[node name="GMDialogue" type="Label" parent="TableLayer/GameMasterZone/GMPanel/HBox/VBox"]
+[node name="ActionPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.77
+anchor_right = 0.97
+anchor_bottom = 0.99
+
+[node name="VBox" type="VBoxContainer" parent="ActionPanel"]
 layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.85, 0.78, 0.62, 1)
-theme_override_font_sizes/font_size = 10
-text = "\"Bienvenue, aventuriers !\""
-vertical_alignment = 1
+theme_override_constants/separation = 8
+
+[node name="MessageLabel" type="Label" parent="ActionPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Bienvenue a la Taverne du Dragon Dore ! Que souhaitez-vous faire ?"
+horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="DiceContainer" type="CenterContainer" parent="TableLayer/GameMasterZone/GMPanel/HBox"]
+[node name="ActionButtons" type="HBoxContainer" parent="ActionPanel/VBox"]
 layout_mode = 2
-custom_minimum_size = Vector2(40, 0)
+alignment = 1
 
-[node name="DiceLabel" type="Label" parent="TableLayer/GameMasterZone/GMPanel/HBox/DiceContainer"]
+[node name="ExploreButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(130, 45)
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "🎲"
+theme_override_font_sizes/font_size = 13
+text = "Explorer"
+
+[node name="BattleButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(130, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Combattre"
+
+[node name="RestButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(130, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Se Reposer"
+
+[node name="ShopButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(130, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Boutique"
+
+[node name="QuestButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(130, 45)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Quetes"
 
 [node name="TopBar" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.005
+anchor_left = 0.25
 anchor_right = 0.98
-anchor_bottom = 0.06
-
-[node name="TitlePanel" type="PanelContainer" parent="TopBar"]
-layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="TopBar/TitlePanel"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
-theme_override_font_sizes/font_size = 14
-text = "God of Paper"
+anchor_bottom = 0.08
 
 [node name="Spacer" type="Control" parent="TopBar"]
 layout_mode = 2
@@ -261,8 +250,7 @@ layout_mode = 2
 
 [node name="GoldLabel" type="Label" parent="TopBar/GoldPanel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.35, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 14
 text = "100 Or"
 
 [node name="TimePanel" type="PanelContainer" parent="TopBar"]
@@ -270,78 +258,18 @@ layout_mode = 2
 
 [node name="TimeLabel" type="Label" parent="TopBar/TimePanel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.85, 0.80, 0.70, 1)
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 14
 text = "00:00:00"
 
 [node name="MenuButton" type="Button" parent="TopBar"]
-custom_minimum_size = Vector2(50, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+theme_override_font_sizes/font_size = 14
 text = "Menu"
 
-[node name="ActionPanel" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.75
-anchor_right = 0.98
-anchor_bottom = 0.995
-
-[node name="VBox" type="VBoxContainer" parent="ActionPanel"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="MessageLabel" type="Label" parent="ActionPanel/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.92, 0.85, 0.70, 1)
-theme_override_font_sizes/font_size = 11
-text = "Bienvenue ! Que souhaitez-vous faire ?"
-horizontal_alignment = 1
-autowrap_mode = 2
-
-[node name="ActionButtons" type="GridContainer" parent="ActionPanel/VBox"]
-layout_mode = 2
-columns = 3
-
-[node name="ExploreButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 11
-text = "Explorer"
-
-[node name="BattleButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 11
-text = "Combat"
-
-[node name="RestButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 11
-text = "Repos"
-
-[node name="ShopButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 11
-text = "Boutique"
-
-[node name="QuestButton" type="Button" parent="ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(0, 35)
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 11
-text = "Quetes"
-
-[connection signal="pressed" from="TopBar/MenuButton" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="ActionPanel/VBox/ActionButtons/ExploreButton" to="." method="_on_explore_pressed"]
 [connection signal="pressed" from="ActionPanel/VBox/ActionButtons/BattleButton" to="." method="_on_battle_pressed"]
 [connection signal="pressed" from="ActionPanel/VBox/ActionButtons/RestButton" to="." method="_on_rest_pressed"]
 [connection signal="pressed" from="ActionPanel/VBox/ActionButtons/ShopButton" to="." method="_on_shop_pressed"]
 [connection signal="pressed" from="ActionPanel/VBox/ActionButtons/QuestButton" to="." method="_on_quest_pressed"]
+[connection signal="pressed" from="TopBar/MenuButton" to="." method="_on_menu_pressed"]

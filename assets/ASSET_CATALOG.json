@@ -1,0 +1,263 @@
+{
+  "version": "1.0",
+  "total_assets": 1021,
+  "source_path": "DL/extracted",
+  "categories": {
+    "characters": {
+      "heroes": {
+        "path": "heroes/Beowulf_Heroes_&_Classes_1.0/Beowulf_Heroes_&_Classes_size_64x64_x",
+        "description": "96 hero sprites in multiple classes (Knight, Mage, Ranger, Ninja, etc.)",
+        "classes": [
+          "Onion_knight", "Knight", "Black_Knight", "Dragoon", "Monk", "Black_belt",
+          "White_Mage", "Red_mage", "Flame_Mage", "Geomancer", "Hex_Blade", "Magus",
+          "Ninja", "Ranger", "Gunner_Mage", "Plage_paladin"
+        ],
+        "files": [
+          "Hero_01_Knight_x.png", "Hero_01_White_Mage_x.png", "Hero_01_Ranger_x.png",
+          "Hero_01_Ninja_x.png", "Hero_01_Monk_x.png", "Hero_01_Black_Knight_x.png"
+        ]
+      },
+      "npcs_pixel_crawler": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Entities/Npc's",
+        "description": "3 NPC types with Run, Idle, Death animations",
+        "types": {
+          "Knight": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Wizzard": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Rogue": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"]
+        }
+      },
+      "player_animations": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Entities/Characters/Body_A/Animations",
+        "description": "Full animation set for player character",
+        "animations": [
+          "Idle_Base", "Walk_Base", "Run_Base", "Hit_Base", "Death_Base",
+          "Slice_Base", "Pierce_Base", "Crush_Base", "Collect_Base",
+          "Carry_Idle", "Carry_Walk", "Carry_Run", "Fishing_Base", "Watering_Base"
+        ]
+      },
+      "tiny_rpg": {
+        "path": "tiny_rpg/Tiny RPG Character Asset Pack v1.03 -Free Soldier&Orc/Characters(100x100)",
+        "description": "Soldier and Orc with full animation sets",
+        "types": {
+          "Soldier": ["Idle.png", "Walk.png", "Attack01.png", "Attack02.png", "Attack03.png", "Hurt.png", "Death.png"],
+          "Orc": ["Idle.png", "Walk.png", "Attack01.png", "Attack02.png", "Hurt.png", "Death.png"]
+        }
+      }
+    },
+    "enemies": {
+      "forest_monsters": {
+        "path": "forest_monsters",
+        "description": "Animated mushroom monster with VFX",
+        "mushroom": {
+          "animations": ["mushroom_idle.png", "mushroom_attack.png", "mushroom_hit.png", "mushroom_die.png"],
+          "vfx": ["mushroom_attack_vfx.png", "mushroom_attack_slice_vfx.png"]
+        }
+      },
+      "mystic_woods_enemies": {
+        "path": "mystic_woods/sprites/characters",
+        "description": "Simple enemy sprites",
+        "files": ["skeleton.png", "skeleton_swordless.png", "slime.png"]
+      },
+      "skeleton_crew": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Entities/Mobs/Skeleton Crew",
+        "description": "4 skeleton variants with animations",
+        "variants": {
+          "Skeleton_Base": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Skeleton_Warrior": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Skeleton_Mage": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Skeleton_Rogue": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"]
+        }
+      },
+      "orc_crew": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Entities/Mobs/Orc Crew",
+        "description": "4 orc variants with animations",
+        "variants": {
+          "Orc": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Orc_Warrior": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Orc_Shaman": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"],
+          "Orc_Rogue": ["Run-Sheet.png", "Idle-Sheet.png", "Death-Sheet.png"]
+        }
+      },
+      "skeletons_detailed": {
+        "path": "skeletons/Skeleton enemy/Skeleton enemy",
+        "description": "Detailed skeleton with 5 animation states",
+        "animations": ["Walk.png", "Attack.png", "Idle.png", "Die.png", "Hurt.png"]
+      }
+    },
+    "environment": {
+      "backgrounds": {
+        "mystic_woods": {
+          "path": "mystic_woods/sprites/tilesets",
+          "files": ["grass.png", "plains.png"]
+        }
+      },
+      "trees": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Props/Static/Trees",
+        "description": "3 tree models with 4 sizes each",
+        "models": {
+          "Model_01": ["Size_02.png", "Size_03.png", "Size_04.png", "Size_05.png"],
+          "Model_02": ["Size_02.png", "Size_03.png", "Size_04.png", "Size_05.png"],
+          "Model_03": ["Size_02.png", "Size_03.png", "Size_04.png", "Size_05.png"]
+        }
+      },
+      "vegetation": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Props/Static",
+        "files": ["Vegetation.png", "Farm.png", "Resources.png"]
+      },
+      "rocks": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Props/Static",
+        "files": ["Rocks.png"]
+      },
+      "water": {
+        "mystic_woods": {
+          "path": "mystic_woods/sprites/tilesets",
+          "files": ["water-sheet.png", "water1.png", "water2.png", "water3.png", "water4.png", "water5.png", "water6.png", "water_decorations.png", "water_lillies.png"]
+        },
+        "pixel_crawler": {
+          "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Tilesets",
+          "files": ["Water_tiles.png"]
+        }
+      },
+      "decorations": {
+        "mystic_woods": {
+          "path": "mystic_woods/sprites/tilesets",
+          "files": ["decor_8x8.png", "decor_16x16.png", "fences.png"]
+        },
+        "objects": {
+          "path": "mystic_woods/sprites/objects",
+          "files": ["objects.png", "chest_01.png", "chest_02.png", "rock_in_water_01.png", "rock_in_water_02.png", "rock_in_water_03.png", "rock_in_water_04.png", "rock_in_water_05.png", "rock_in_water_06.png"]
+        }
+      },
+      "buildings": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Structures/Buildings",
+        "files": ["Walls.png", "Floors.png", "Roofs.png", "Props.png", "Shadows.png"]
+      },
+      "tilesets": {
+        "pixel_crawler": {
+          "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Tilesets",
+          "files": ["Dungeon_Tiles.png", "Wall_Tiles.png", "Wall_Variations.png", "Floors_Tiles.png", "Water_tiles.png"]
+        },
+        "mystic_woods": {
+          "path": "mystic_woods/sprites/tilesets",
+          "files": ["grass.png", "plains.png"],
+          "walls": ["walls.png", "wooden_door.png", "wooden_door_b.png"],
+          "floors": ["flooring.png", "carpet.png", "wooden.png"]
+        }
+      },
+      "particles": {
+        "path": "mystic_woods/sprites/particles",
+        "files": ["dust_particles_01.png"]
+      }
+    },
+    "stations": {
+      "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Structures/Stations",
+      "description": "Interactive stations for crafting/activities",
+      "types": {
+        "Anvil": {
+          "static": "Anvil.png",
+          "animated": ["Anvil_01-Sheet.png", "Anvil_02-Sheet.png", "Anvil_03-Sheet.png"]
+        },
+        "Alchemy": {
+          "animated": ["Alchemy_Table_01-Sheet.png", "Alchemy_Table_02-Sheet.png", "Alchemy_Table_03-Sheet.png"]
+        },
+        "Bonfire": {
+          "static": "Bonfire.png",
+          "animated": ["Bonfire_01-Sheet.png", "Bonfire_02-Sheet.png", "Fire_01-Sheet.png", "Fire_02-Sheet.png", "Smoke-Sheet.png"]
+        },
+        "Furnace": {
+          "static": "Furnace.png",
+          "animated": ["Stone_01-Sheet.png", "Stone_02-Sheet.png", "Stone_03-Sheet.png", "Iron_01-Sheet.png", "Iron_02-Sheet.png", "Iron_03-Sheet.png", "Bricks_01-Sheet.png", "Bricks_02-Sheet.png", "Bricks_03-Sheet.png"]
+        },
+        "Cooking_Station": {
+          "static": ["Cooking Station.png", "Estructure.png"],
+          "grill": ["Grill_01-Sheet.png", "Grill_02-Sheet.png", "Grill_03-Sheet.png", "Grill_04-Sheet.png"],
+          "cooker": ["Cooker_01.png", "Cooker_02.png", "Cooker_03-Sheet.png", "Cooker_04-Sheet.png"],
+          "butchery": ["Butchery_01-Sheet.png", "Butchery_02.png", "Butchery_03.png", "Butchery_04.png"]
+        },
+        "Sawmill": {
+          "files": ["Base.png", "Level_1.png", "Level_2-Sheet.png", "Level_3-Sheet.png"]
+        },
+        "Workbench": {
+          "static": "Workbench.png"
+        }
+      }
+    },
+    "props": {
+      "furniture": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Props/Static",
+        "files": ["Furniture.png", "Dungeon_Props.png", "Esoteric.png", "Shadows.png"]
+      },
+      "tools": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Props/Static",
+        "files": ["Tools.png", "Meat.png", "Pan.png"]
+      },
+      "animated_props": {
+        "path": "pixel_crawler/Pixel Crawler - Free Pack/Environment/Props/Animated",
+        "files": ["Pan_01-Sheet.png", "Pan_02-Sheet.png", "Pan_03-Sheet.png", "Pan_04-Sheet.png", "Pan_05-Sheet.png"]
+      }
+    },
+    "ui": {
+      "fantasy_ui": {
+        "path": "fantasy_ui/FantasyUIfree",
+        "description": "Dragon-themed HP bars and UI elements",
+        "files": ["Dragonhpbar.png", "DragonHpBar2.png", "DragonHpBar3.png", "freefantasy.png"]
+      }
+    },
+    "icons": {
+      "minerals": {
+        "path": "minerals/PNG/Transperent",
+        "description": "48 mineral/gem icons for items",
+        "count": 48,
+        "usage": "crafting materials, treasures"
+      },
+      "pirate": {
+        "path": "pirate/PNG/Transperent",
+        "description": "48 pirate-themed icons",
+        "count": 48,
+        "usage": "pirate theme items, treasures"
+      },
+      "undead_loot": {
+        "path": "undead_loot/PNG/Transperent",
+        "description": "50 undead-themed icons",
+        "count": 50,
+        "bonus": ["Icon49.png", "Icon50.png"],
+        "usage": "dark magic items, undead drops"
+      }
+    },
+    "projectiles": {
+      "arrows": {
+        "path": "tiny_rpg/Tiny RPG Character Asset Pack v1.03 -Free Soldier&Orc/Arrow(Projectile)",
+        "files": ["Arrow01(32x32).png", "Arrow01(100x100).png"]
+      }
+    }
+  },
+  "quick_reference": {
+    "forest_environment": [
+      "mystic_woods/sprites/tilesets/grass.png",
+      "mystic_woods/sprites/tilesets/plains.png",
+      "pixel_crawler/...Environment/Props/Static/Trees/Model_01/Size_04.png",
+      "pixel_crawler/...Environment/Props/Static/Trees/Model_02/Size_04.png",
+      "pixel_crawler/...Environment/Props/Static/Vegetation.png",
+      "pixel_crawler/...Environment/Props/Static/Rocks.png"
+    ],
+    "tavern_environment": [
+      "mystic_woods/sprites/tilesets/floors/wooden.png",
+      "mystic_woods/sprites/tilesets/walls/walls.png",
+      "pixel_crawler/...Environment/Structures/Buildings/Walls.png",
+      "pixel_crawler/...Environment/Props/Static/Furniture.png",
+      "pixel_crawler/...Environment/Structures/Stations/Bonfire/Bonfire.png"
+    ],
+    "dungeon_environment": [
+      "pixel_crawler/...Environment/Tilesets/Dungeon_Tiles.png",
+      "pixel_crawler/...Environment/Tilesets/Wall_Tiles.png",
+      "pixel_crawler/...Environment/Props/Static/Dungeon_Props.png",
+      "pixel_crawler/...Environment/Props/Static/Esoteric.png"
+    ],
+    "water_environment": [
+      "mystic_woods/sprites/tilesets/water-sheet.png",
+      "mystic_woods/sprites/tilesets/water_lillies.png",
+      "mystic_woods/sprites/objects/rock_in_water_01.png",
+      "pixel_crawler/...Environment/Tilesets/Water_tiles.png"
+    ]
+  }
+}
