@@ -177,6 +177,9 @@ func _end_battle(victory: bool) -> void:
 		"loot": loot
 	}
 
+	# Auto-save après chaque combat
+	GameManager.save_game(0)
+
 	battle_ended.emit(victory, rewards)
 
 ## Exécuter une action de combat

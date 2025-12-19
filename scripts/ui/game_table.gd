@@ -208,10 +208,28 @@ func _create_character_card(character: Character, is_enemy: bool) -> Control:
 		mp_bar.value = character.current_mp
 		mp_bar.show_percentage = false
 		# Couleur bleue pour le mana
-		var style = StyleBoxFlat.new()
-		style.bg_color = Color(0.2, 0.4, 0.8)
-		mp_bar.add_theme_stylebox_override("fill", style)
+		var mp_style = StyleBoxFlat.new()
+		mp_style.bg_color = Color(0.2, 0.4, 0.8)
+		mp_bar.add_theme_stylebox_override("fill", mp_style)
 		vbox.add_child(mp_bar)
+
+		# Barre d'XP
+		var xp_bar = ProgressBar.new()
+		xp_bar.custom_minimum_size = Vector2(100, 6)
+		xp_bar.max_value = character.get_exp_for_next_level()
+		xp_bar.value = character.experience
+		xp_bar.show_percentage = false
+		var xp_style = StyleBoxFlat.new()
+		xp_style.bg_color = Color(0.8, 0.7, 0.2)
+		xp_bar.add_theme_stylebox_override("fill", xp_style)
+		vbox.add_child(xp_bar)
+
+		var xp_label = Label.new()
+		xp_label.text = "XP: %d/%d" % [character.experience, character.get_exp_for_next_level()]
+		xp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		xp_label.add_theme_font_size_override("font_size", 8)
+		xp_label.add_theme_color_override("font_color", Color(0.8, 0.7, 0.3))
+		vbox.add_child(xp_label)
 
 	return card
 
