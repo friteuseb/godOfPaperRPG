@@ -10,6 +10,7 @@ extends Control
 @onready var action_buttons: HBoxContainer = $ActionPanel/VBox/ActionButtons
 @onready var location_background: TextureRect = $BackgroundLayer/LocationBackground
 @onready var base_background: ColorRect = $BackgroundLayer/BaseBackground
+@onready var ambient_overlay: ColorRect = $BackgroundLayer/AmbientOverlay
 
 # Environment decoration containers
 @onready var left_decor: VBoxContainer = $TableTop/EnvironmentLayer/LeftDecor
@@ -30,26 +31,28 @@ var locations: Dictionary = {
 		"name": "Taverne du Dragon Dore",
 		"can_rest": true,
 		"can_shop": true,
-		"bg_color": Color(0.15, 0.1, 0.12, 1),
-		"bg_modulate": Color(0.4, 0.3, 0.25, 0.3),
+		"bg_color": Color(0.12, 0.08, 0.06, 1),
+		"bg_modulate": Color(0.6, 0.45, 0.3, 0.4),
+		"ambient_color": Color(1.0, 0.85, 0.6, 0.15),
 		"decorations": {
-			"left": ["furniture", "chest"],
-			"right": ["furniture", "chest"],
-			"top": ["bonfire"],
-			"bottom": ["vegetation"]
+			"left": ["barrel", "furniture", "chest"],
+			"right": ["barrel", "furniture", "tools"],
+			"top": ["bonfire", "lantern", "bonfire"],
+			"bottom": ["furniture", "chest", "furniture"]
 		}
 	},
 	"forest": {
 		"name": "Foret Sombre",
 		"enemy_level": 1,
 		"enemies": ["goblin", "wolf", "mushroom", "slime"],
-		"bg_color": Color(0.08, 0.15, 0.08, 1),
-		"bg_modulate": Color(0.4, 0.6, 0.3, 0.5),
+		"bg_color": Color(0.04, 0.12, 0.06, 1),
+		"bg_modulate": Color(0.3, 0.5, 0.25, 0.6),
+		"ambient_color": Color(0.4, 0.6, 0.3, 0.1),
 		"decorations": {
-			"left": ["tree_large", "tree_medium", "vegetation"],
-			"right": ["tree_large", "tree_medium", "vegetation"],
-			"top": ["tree_small", "rocks"],
-			"bottom": ["vegetation", "rocks"]
+			"left": ["tree_large", "tree_medium", "tree_small", "vegetation"],
+			"right": ["tree_large", "tree_medium", "tree_small", "vegetation"],
+			"top": ["vegetation", "rocks", "vegetation"],
+			"bottom": ["vegetation", "rocks", "vegetation", "rocks"]
 		}
 	},
 	"dungeon": {
@@ -104,7 +107,10 @@ var decoration_assets: Dictionary = {
 	"chest": {"path": ENV_PROPS + "chest_01.png", "size": Vector2(32, 32), "modulate": Color(0.9, 0.8, 0.5)},
 	"dungeon_props": {"path": ENV_PROPS + "Dungeon_Props.png", "size": Vector2(40, 40), "modulate": Color(0.6, 0.6, 0.7)},
 	"esoteric": {"path": ENV_PROPS + "Esoteric.png", "size": Vector2(40, 40), "modulate": Color(0.7, 0.5, 0.8)},
-	"bonfire": {"path": ENV_STATIONS + "Bonfire.png", "size": Vector2(48, 48), "modulate": Color(1.0, 0.9, 0.7)}
+	"bonfire": {"path": ENV_STATIONS + "Bonfire.png", "size": Vector2(48, 48), "modulate": Color(1.0, 0.9, 0.7)},
+	"barrel": {"path": ENV_PROPS + "objects.png", "size": Vector2(32, 40), "modulate": Color(0.7, 0.5, 0.35)},
+	"lantern": {"path": ENV_STATIONS + "Fire_01-Sheet.png", "size": Vector2(24, 32), "modulate": Color(1.0, 0.9, 0.6)},
+	"tools": {"path": ENV_PROPS + "Tools.png", "size": Vector2(32, 32), "modulate": Color(0.6, 0.6, 0.7)}
 }
 
 var character_card_scene: PackedScene
@@ -256,12 +262,14 @@ func _update_location_display() -> void:
 func _update_background(loc_data: Dictionary) -> void:
 	var bg_color = loc_data.get("bg_color", Color(0.12, 0.08, 0.15, 1))
 	var bg_modulate = loc_data.get("bg_modulate", Color(0.5, 0.5, 0.5, 0.3))
+	var ambient_color = loc_data.get("ambient_color", Color(0.0, 0.0, 0.0, 0.0))
 
 	# Animation fluide du changement de couleur
 	var tween = create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(base_background, "color", bg_color, 0.5)
 	tween.tween_property(location_background, "modulate", bg_modulate, 0.5)
+	tween.tween_property(ambient_overlay, "color", ambient_color, 0.5)
 
 	# Update environment decorations
 	_update_decorations(loc_data)
