@@ -1,12 +1,12 @@
 extends Control
-## Écran de création de personnage
+## Ecran de creation de personnage - Style Knights of Pen and Paper
 
-@onready var party_list: VBoxContainer = $PartyPanel/VBox/PartyList
-@onready var class_list: VBoxContainer = $ClassPanel/VBox/ClassList
-@onready var name_input: LineEdit = $ClassPanel/VBox/NameInput/LineEdit
-@onready var party_label: Label = $PartyPanel/VBox/Label
+@onready var party_list: VBoxContainer = $TableLayer/PartyPanel/VBox/PartyList
+@onready var class_list: VBoxContainer = $TableLayer/ClassPanel/VBox/ClassScroll/ClassList
+@onready var name_input: LineEdit = $TableLayer/ClassPanel/VBox/NameInput/LineEdit
+@onready var party_label: Label = $TableLayer/PartyPanel/VBox/Label
 @onready var start_button: Button = $StartButton
-@onready var add_button: Button = $ClassPanel/VBox/AddButton
+@onready var add_button: Button = $TableLayer/ClassPanel/VBox/AddButton
 
 var selected_class: CharacterClass = null
 var class_buttons: Array[Button] = []
@@ -126,11 +126,11 @@ func _populate_class_list() -> void:
 		class_list.add_child(button)
 		class_buttons.append(button)
 
-		# Ajouter description sous le bouton
+		# Ajouter description sous le bouton (style parchemin)
 		var desc = Label.new()
 		desc.text = char_class.description
-		desc.add_theme_font_size_override("font_size", 11)
-		desc.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+		desc.add_theme_font_size_override("font_size", 10)
+		desc.add_theme_color_override("font_color", Color(0.55, 0.45, 0.35, 1))
 		desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		class_list.add_child(desc)
 
@@ -166,7 +166,7 @@ func _update_party_display() -> void:
 
 		party_list.add_child(hbox)
 
-	party_label.text = "Ton Équipe (%d/4)" % GameManager.party.size()
+	party_label.text = "Ton Equipe (%d/4)" % GameManager.party.size()
 	start_button.disabled = GameManager.party.is_empty()
 
 func _on_add_character_pressed() -> void:

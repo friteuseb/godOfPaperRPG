@@ -230,12 +230,22 @@ func _apply_action_effects(action: BattleAction) -> void:
 
 func _apply_basic_attack(user: Character, target: Character) -> void:
 	var is_critical = randf() < user.critical_chance
-	var base_damage = user.attack + (user.level * 2)
+
+	# Degats de base = attaque + bonus niveau
+	var stat_damage: float = user.attack + (user.level * 2)
+
+	# Reduction par la defense (diminishing returns)
+	var defense_reduction: float = target.defense / (target.defense + 50.0)
+	var base_damage: int = int(stat_damage * (1.0 - defense_reduction * 0.5))
+	base_damage = max(1, base_damage)
 
 	if is_critical:
 		base_damage = int(base_damage * 1.5)
 
-	var result = target.take_damage(base_damage, false)
+	# Variation aleatoire
+	base_damage = int(base_damage * randf_range(0.9, 1.1))
+
+	var result = target.take_damage(base_damage, false, true)  # ignore_defense car deja calcule
 
 	if result.dodged:
 		_log_message("%s esquive l'attaque !" % target.character_name)

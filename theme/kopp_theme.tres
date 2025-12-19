@@ -1,0 +1,86 @@
+[gd_resource type="Theme" format=3]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_wood"]
+bg_color = Color(0.42, 0.28, 0.15, 0.98)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.28, 0.18, 0.08, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_wood_normal"]
+bg_color = Color(0.55, 0.38, 0.22, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.35, 0.22, 0.12, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_wood_hover"]
+bg_color = Color(0.65, 0.48, 0.28, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.85, 0.70, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0.85, 0.70, 0.35, 0.3)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button_wood_pressed"]
+bg_color = Color(0.40, 0.28, 0.15, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28, 0.18, 0.08, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bar_bg"]
+bg_color = Color(0.18, 0.12, 0.08, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.22, 0.12, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bar_fill"]
+bg_color = Color(0.75, 0.18, 0.15, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[resource]
+Button/styles/normal = SubResource("StyleBoxFlat_button_wood_normal")
+Button/styles/hover = SubResource("StyleBoxFlat_button_wood_hover")
+Button/styles/pressed = SubResource("StyleBoxFlat_button_wood_pressed")
+Button/colors/font_color = Color(0.95, 0.90, 0.75, 1)
+Button/colors/font_hover_color = Color(1, 0.95, 0.70, 1)
+Button/colors/font_pressed_color = Color(0.75, 0.68, 0.55, 1)
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_panel_wood")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_hp_bar_bg")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_hp_bar_fill")
+Label/colors/font_color = Color(0.22, 0.15, 0.08, 1)

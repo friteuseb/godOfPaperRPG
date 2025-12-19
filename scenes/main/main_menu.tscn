@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://1oxwqd2l2ub3"]
+[gd_scene load_steps=4 format=3 uid="uid://1oxwqd2l2ub3"]
 
 [ext_resource type="Script" uid="uid://cmeo3jf103mod" path="res://scripts/ui/main_menu.gd" id="1_main_menu"]
-[ext_resource type="Theme" path="res://theme/game_theme.tres" id="2_theme"]
+[ext_resource type="Theme" path="res://theme/kopp_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/tavern_floor.png" id="3_wood"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -13,69 +14,177 @@ grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_main_menu")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="RoomBackground" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.12, 0.08, 0.2, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="WallColor" type="ColorRect" parent="RoomBackground"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.22, 0.15, 0.10, 1)
+
+[node name="WallPattern" type="ColorRect" parent="RoomBackground"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.35
+color = Color(0.18, 0.12, 0.08, 1)
+
+[node name="CandleGlow1" type="ColorRect" parent="RoomBackground"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_right = 0.4
+anchor_bottom = 0.30
+color = Color(1, 0.85, 0.55, 0.06)
+
+[node name="CandleGlow2" type="ColorRect" parent="RoomBackground"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_right = 0.9
+anchor_bottom = 0.30
+color = Color(1, 0.85, 0.55, 0.06)
+
+[node name="TableLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.18
+anchor_right = 0.92
+anchor_bottom = 0.90
+
+[node name="TableShadow" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 6.0
+offset_bottom = 6.0
+color = Color(0, 0, 0, 0.5)
+
+[node name="TableSurface" type="TextureRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("3_wood")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="TableOverlay" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.38, 0.25, 0.14, 0.65)
+
+[node name="TableBorder" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.28, 0.18, 0.10, 1)
+
+[node name="TableInner" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+color = Color(0.42, 0.28, 0.16, 1)
+
+[node name="MenuContent" type="Control" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -15.0
+offset_bottom = -15.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TableLayer/MenuContent"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -150.0
-offset_right = 150.0
-offset_bottom = 150.0
+offset_left = -140.0
+offset_top = -200.0
+offset_right = 140.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="TitlePanel" type="PanelContainer" parent="TableLayer/MenuContent/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "God of Paper RPG"
+
+[node name="TitleVBox" type="VBoxContainer" parent="TableLayer/MenuContent/VBoxContainer/TitlePanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Title" type="Label" parent="TableLayer/MenuContent/VBoxContainer/TitlePanel/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
+theme_override_font_sizes/font_size = 26
+text = "God of Paper"
 horizontal_alignment = 1
 
-[node name="Subtitle" type="Label" parent="VBoxContainer"]
+[node name="Subtitle" type="Label" parent="TableLayer/MenuContent/VBoxContainer/TitlePanel/TitleVBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.75, 0.65, 0.50, 1)
+theme_override_font_sizes/font_size = 11
 text = "Un RPG de table dans ta poche"
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 30)
+[node name="DiceDecor" type="Label" parent="TableLayer/MenuContent/VBoxContainer/TitlePanel/TitleVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🎲 ⚔️ 🛡️ 🧙 🎲"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="TableLayer/MenuContent/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="NewGameButton" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="NewGameButton" type="Button" parent="TableLayer/MenuContent/VBoxContainer"]
+custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 13
 text = "Nouvelle Partie"
 
-[node name="ContinueButton" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="ContinueButton" type="Button" parent="TableLayer/MenuContent/VBoxContainer"]
+custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 13
 text = "Continuer"
 
-[node name="OptionsButton" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="OptionsButton" type="Button" parent="TableLayer/MenuContent/VBoxContainer"]
+custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 13
 text = "Options"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(200, 50)
+[node name="QuitButton" type="Button" parent="TableLayer/MenuContent/VBoxContainer"]
+custom_minimum_size = Vector2(180, 45)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 13
 text = "Quitter"
 
 [node name="Version" type="Label" parent="."]
@@ -86,15 +195,16 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -100.0
-offset_top = -30.0
+offset_top = -25.0
+offset_right = -8.0
 grow_horizontal = 0
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
-theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(0.55, 0.45, 0.35, 1)
+theme_override_font_sizes/font_size = 10
 text = "v0.1.0 Alpha"
 horizontal_alignment = 2
 
-[connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_pressed"]
-[connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="TableLayer/MenuContent/VBoxContainer/NewGameButton" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="TableLayer/MenuContent/VBoxContainer/ContinueButton" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="TableLayer/MenuContent/VBoxContainer/OptionsButton" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="TableLayer/MenuContent/VBoxContainer/QuitButton" to="." method="_on_quit_pressed"]

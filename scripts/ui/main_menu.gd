@@ -1,7 +1,7 @@
 extends Control
-## Menu principal du jeu
+## Menu principal du jeu - Style Knights of Pen and Paper
 
-@onready var continue_button: Button = $VBoxContainer/ContinueButton
+@onready var continue_button: Button = $TableLayer/MenuContent/VBoxContainer/ContinueButton
 
 func _ready() -> void:
 	# Vérifier si une sauvegarde existe

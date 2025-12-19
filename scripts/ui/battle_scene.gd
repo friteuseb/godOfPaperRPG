@@ -1,19 +1,21 @@
 extends Control
-## Interface de combat avec fond de forêt
+## Interface de combat style Knights of Pen and Paper
+## Combat sur la table de JDR avec figurines
 
 signal battle_finished(victory: bool, rewards: Dictionary)
 
-@onready var enemy_zone: HBoxContainer = $BattleArena/EnemyZone
-@onready var party_zone: HBoxContainer = $BattleArena/PartyZone
+@onready var enemy_zone: HBoxContainer = $BattleFrame/BattleArena/EnemyZone
+@onready var party_zone: HBoxContainer = $BattleFrame/BattleArena/PartyZone
 @onready var message_label: Label = $UILayer/MessagePanel/MessageLabel
 @onready var turn_label: Label = $UILayer/ActionPanel/VBox/TurnLabel
-@onready var action_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/ActionButtons
+@onready var action_buttons: GridContainer = $UILayer/ActionPanel/VBox/ActionButtons
 @onready var target_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/TargetButtons
-@onready var skill_list: HBoxContainer = $UILayer/ActionPanel/VBox/SkillList
+@onready var skill_list: GridContainer = $UILayer/ActionPanel/VBox/SkillList
+@onready var battle_title: Label = $BattleTitlePanel/BattleTitle
 
-# Alias pour compatibilité
-@onready var enemy_list: HBoxContainer = $BattleArena/EnemyZone
-@onready var party_list: HBoxContainer = $BattleArena/PartyZone
+# Alias pour compatibilite
+@onready var enemy_list: HBoxContainer = $BattleFrame/BattleArena/EnemyZone
+@onready var party_list: HBoxContainer = $BattleFrame/BattleArena/PartyZone
 
 var party: Array[Character] = []
 var enemies: Array[Character] = []
@@ -28,7 +30,6 @@ func setup_battle(party_members: Array[Character], enemy_group: Array[Character]
 	party = []
 	enemies = []
 
-	# Copier les personnages pour éviter les modifications directes
 	for p in party_members:
 		party.append(p)
 	for e in enemy_group:
@@ -42,7 +43,6 @@ func _ready() -> void:
 	BattleManager.damage_dealt.connect(_on_damage_dealt)
 	BattleManager.character_died.connect(_on_character_died)
 
-	# Démarrer le combat après un court délai
 	await get_tree().create_timer(0.3).timeout
 
 	if not party.is_empty() and not enemies.is_empty():
@@ -62,7 +62,7 @@ func _update_party_display() -> void:
 	party_widgets.clear()
 
 	for character in party:
-		var widget = _create_character_widget(character, false)
+		var widget = _create_figurine_card(character, false)
 		party_list.add_child(widget)
 		party_widgets[character] = widget
 
@@ -72,17 +72,42 @@ func _update_enemy_display() -> void:
 	enemy_widgets.clear()
 
 	for enemy in enemies:
-		var widget = _create_character_widget(enemy, true)
+		var widget = _create_figurine_card(enemy, true)
 		enemy_list.add_child(widget)
 		enemy_widgets[enemy] = widget
 
-func _create_character_widget(character: Character, is_enemy: bool) -> Control:
-	var hbox = HBoxContainer.new()
-	hbox.custom_minimum_size = Vector2(0, 50)
+func _create_figurine_card(character: Character, is_enemy: bool) -> Control:
+	# Style carte figurine de JDR
+	var card = PanelContainer.new()
+	card.custom_minimum_size = Vector2(95, 120)
 
-	# Sprite
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.72, 0.65, 0.52, 0.95) if not is_enemy else Color(0.58, 0.48, 0.42, 0.95)
+	style.border_width_left = 2
+	style.border_width_top = 2
+	style.border_width_right = 2
+	style.border_width_bottom = 2
+	style.border_color = Color(0.42, 0.30, 0.18, 1) if not is_enemy else Color(0.52, 0.38, 0.28, 1)
+	style.corner_radius_top_left = 4
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_right = 4
+	style.corner_radius_bottom_left = 4
+	style.shadow_color = Color(0, 0, 0, 0.35)
+	style.shadow_size = 3
+	card.add_theme_stylebox_override("panel", style)
+
+	var vbox = VBoxContainer.new()
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_theme_constant_override("separation", 2)
+	card.add_child(vbox)
+
+	# Sprite du personnage (figurine)
+	var sprite_container = CenterContainer.new()
+	sprite_container.custom_minimum_size = Vector2(0, 44)
+	vbox.add_child(sprite_container)
+
 	var sprite_rect = TextureRect.new()
-	sprite_rect.custom_minimum_size = Vector2(40, 40)
+	sprite_rect.custom_minimum_size = Vector2(36, 36)
 	sprite_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	sprite_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 
@@ -93,78 +118,114 @@ func _create_character_widget(character: Character, is_enemy: bool) -> Control:
 	else:
 		sprite_rect.texture = SpriteLoader.get_character_sprite(sprite_name)
 
-	hbox.add_child(sprite_rect)
+	sprite_container.add_child(sprite_rect)
 
-	# Info
-	var vbox = VBoxContainer.new()
-	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Socle de figurine
+	var base_container = CenterContainer.new()
+	var base = ColorRect.new()
+	base.custom_minimum_size = Vector2(28, 4)
+	base.color = Color(0.32, 0.22, 0.12, 0.9)
+	base_container.add_child(base)
+	vbox.add_child(base_container)
 
+	# Nom
 	var name_label = Label.new()
-	name_label.text = "%s (Niv.%d)" % [character.character_name, character.level]
-	name_label.add_theme_font_size_override("font_size", 12)
+	name_label.text = character.character_name
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.add_theme_font_size_override("font_size", 9)
+	name_label.add_theme_color_override("font_color", Color(0.18, 0.12, 0.08, 1))
 	vbox.add_child(name_label)
 
-	# HP Bar
-	var hp_hbox = HBoxContainer.new()
-	var hp_label = Label.new()
-	hp_label.text = "HP:"
-	hp_label.add_theme_font_size_override("font_size", 10)
-	hp_hbox.add_child(hp_label)
+	# Niveau
+	var level_label = Label.new()
+	level_label.text = "Niv.%d" % character.level
+	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	level_label.add_theme_font_size_override("font_size", 8)
+	level_label.add_theme_color_override("font_color", Color(0.42, 0.32, 0.22, 1))
+	vbox.add_child(level_label)
 
+	# Container pour les barres
+	var bars_container = VBoxContainer.new()
+	bars_container.add_theme_constant_override("separation", 1)
+	vbox.add_child(bars_container)
+
+	# Barre de HP
 	var hp_bar = ProgressBar.new()
-	hp_bar.custom_minimum_size = Vector2(80, 12)
+	hp_bar.custom_minimum_size = Vector2(75, 10)
 	hp_bar.max_value = character.max_hp
 	hp_bar.value = character.current_hp
 	hp_bar.show_percentage = false
 	hp_bar.name = "HPBar"
-	hp_hbox.add_child(hp_bar)
 
-	var hp_text = Label.new()
-	hp_text.text = "%d/%d" % [character.current_hp, character.max_hp]
-	hp_text.add_theme_font_size_override("font_size", 10)
-	hp_text.name = "HPText"
-	hp_hbox.add_child(hp_text)
+	var hp_style_bg = StyleBoxFlat.new()
+	hp_style_bg.bg_color = Color(0.18, 0.12, 0.08, 1)
+	hp_style_bg.corner_radius_top_left = 2
+	hp_style_bg.corner_radius_top_right = 2
+	hp_style_bg.corner_radius_bottom_right = 2
+	hp_style_bg.corner_radius_bottom_left = 2
+	hp_bar.add_theme_stylebox_override("background", hp_style_bg)
 
-	vbox.add_child(hp_hbox)
+	var hp_style_fill = StyleBoxFlat.new()
+	hp_style_fill.bg_color = Color(0.75, 0.18, 0.15, 1)
+	hp_style_fill.corner_radius_top_left = 2
+	hp_style_fill.corner_radius_top_right = 2
+	hp_style_fill.corner_radius_bottom_right = 2
+	hp_style_fill.corner_radius_bottom_left = 2
+	hp_bar.add_theme_stylebox_override("fill", hp_style_fill)
 
-	# MP Bar (allies only)
-	if not is_enemy:
-		var mp_hbox = HBoxContainer.new()
-		var mp_label = Label.new()
-		mp_label.text = "MP:"
-		mp_label.add_theme_font_size_override("font_size", 10)
-		mp_hbox.add_child(mp_label)
+	bars_container.add_child(hp_bar)
 
+	# Label HP
+	var hp_label = Label.new()
+	hp_label.text = "%d/%d" % [character.current_hp, character.max_hp]
+	hp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hp_label.add_theme_font_size_override("font_size", 8)
+	hp_label.add_theme_color_override("font_color", Color(0.32, 0.22, 0.15, 1))
+	hp_label.name = "HPText"
+	bars_container.add_child(hp_label)
+
+	# Barre de MP (allies seulement)
+	if not is_enemy and character.max_mp > 0:
 		var mp_bar = ProgressBar.new()
-		mp_bar.custom_minimum_size = Vector2(80, 12)
+		mp_bar.custom_minimum_size = Vector2(75, 6)
 		mp_bar.max_value = character.max_mp
 		mp_bar.value = character.current_mp
 		mp_bar.show_percentage = false
 		mp_bar.name = "MPBar"
-		mp_hbox.add_child(mp_bar)
 
-		var mp_text = Label.new()
-		mp_text.text = "%d/%d" % [character.current_mp, character.max_mp]
-		mp_text.add_theme_font_size_override("font_size", 10)
-		mp_text.name = "MPText"
-		mp_hbox.add_child(mp_text)
+		mp_bar.add_theme_stylebox_override("background", hp_style_bg)
 
-		vbox.add_child(mp_hbox)
+		var mp_style_fill = StyleBoxFlat.new()
+		mp_style_fill.bg_color = Color(0.15, 0.35, 0.75, 1)
+		mp_style_fill.corner_radius_top_left = 2
+		mp_style_fill.corner_radius_top_right = 2
+		mp_style_fill.corner_radius_bottom_right = 2
+		mp_style_fill.corner_radius_bottom_left = 2
+		mp_bar.add_theme_stylebox_override("fill", mp_style_fill)
 
-	hbox.add_child(vbox)
+		bars_container.add_child(mp_bar)
 
-	# Status indicator
+		var mp_label = Label.new()
+		mp_label.text = "%d/%d" % [character.current_mp, character.max_mp]
+		mp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		mp_label.add_theme_font_size_override("font_size", 7)
+		mp_label.add_theme_color_override("font_color", Color(0.25, 0.35, 0.55, 1))
+		mp_label.name = "MPText"
+		bars_container.add_child(mp_label)
+
+	# Indicateur de statut
 	var status_label = Label.new()
 	status_label.name = "StatusLabel"
 	status_label.text = ""
-	status_label.add_theme_font_size_override("font_size", 16)
-	hbox.add_child(status_label)
+	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	status_label.add_theme_font_size_override("font_size", 12)
+	vbox.add_child(status_label)
 
 	# Griser si mort
 	if not character.is_alive():
-		hbox.modulate = Color(0.5, 0.5, 0.5)
+		card.modulate = Color(0.5, 0.5, 0.5)
 
-	return hbox
+	return card
 
 func _update_character_widget(character: Character) -> void:
 	var widget = party_widgets.get(character)
@@ -173,7 +234,6 @@ func _update_character_widget(character: Character) -> void:
 	if not widget:
 		return
 
-	# Trouver et mettre à jour les éléments
 	var hp_bar = widget.find_child("HPBar", true, false)
 	var hp_text = widget.find_child("HPText", true, false)
 
@@ -190,7 +250,6 @@ func _update_character_widget(character: Character) -> void:
 	if mp_text:
 		mp_text.text = "%d/%d" % [character.current_mp, character.max_mp]
 
-	# Griser si mort
 	if not character.is_alive():
 		widget.modulate = Color(0.5, 0.5, 0.5)
 
@@ -198,7 +257,6 @@ func _on_turn_started(character: Character) -> void:
 	current_character = character
 	turn_label.text = "Tour de: %s" % character.character_name
 
-	# Highlight le personnage actif
 	_highlight_active_character(character)
 
 	if character in party:
@@ -207,7 +265,7 @@ func _on_turn_started(character: Character) -> void:
 		_set_action_buttons_visible(false)
 
 func _highlight_active_character(character: Character) -> void:
-	# Reset all highlights
+	# Reset tous les highlights
 	for widget in party_widgets.values():
 		widget.modulate = Color.WHITE
 	for widget in enemy_widgets.values():
@@ -221,12 +279,17 @@ func _highlight_active_character(character: Character) -> void:
 		if not e.is_alive() and enemy_widgets.has(e):
 			enemy_widgets[e].modulate = Color(0.5, 0.5, 0.5)
 
-	# Highlight active
+	# Highlight actif avec effet dore
 	var widget = party_widgets.get(character)
 	if not widget:
 		widget = enemy_widgets.get(character)
 	if widget:
-		widget.modulate = Color(1.2, 1.2, 0.8)
+		widget.modulate = Color(1.15, 1.10, 0.85)
+		# Animation de pulsation
+		var tween = create_tween()
+		tween.set_loops(2)
+		tween.tween_property(widget, "modulate", Color(1.25, 1.15, 0.80), 0.3)
+		tween.tween_property(widget, "modulate", Color(1.15, 1.10, 0.85), 0.3)
 
 func _set_action_buttons_visible(visible: bool) -> void:
 	action_buttons.visible = visible
@@ -238,23 +301,67 @@ func _on_message_displayed(message: String) -> void:
 
 func _on_damage_dealt(target: Character, amount: int, is_critical: bool) -> void:
 	_update_character_widget(target)
-	# TODO: Ajouter animation de dégâts
+	# Animation de degats
+	_show_damage_popup(target, amount, is_critical)
+
+func _show_damage_popup(target: Character, amount: int, is_critical: bool) -> void:
+	var widget = party_widgets.get(target)
+	if not widget:
+		widget = enemy_widgets.get(target)
+	if not widget:
+		return
+
+	# Creer un label flottant pour les degats
+	var damage_label = Label.new()
+	damage_label.text = "-%d" % amount if amount > 0 else "+%d" % abs(amount)
+	damage_label.add_theme_font_size_override("font_size", 16 if is_critical else 12)
+	damage_label.add_theme_color_override("font_color", Color(1, 0.3, 0.2) if amount > 0 else Color(0.3, 1, 0.3))
+	damage_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	if is_critical:
+		damage_label.text += " CRIT!"
+		damage_label.add_theme_color_override("font_color", Color(1, 0.8, 0.2))
+
+	widget.add_child(damage_label)
+	damage_label.position = Vector2(widget.size.x / 2 - 20, -10)
+
+	# Animation
+	var tween = create_tween()
+	tween.tween_property(damage_label, "position:y", damage_label.position.y - 30, 0.8)
+	tween.parallel().tween_property(damage_label, "modulate:a", 0, 0.8)
+	tween.tween_callback(damage_label.queue_free)
 
 func _on_character_died(character: Character) -> void:
 	_update_character_widget(character)
+	var widget = party_widgets.get(character)
+	if not widget:
+		widget = enemy_widgets.get(character)
+	if widget:
+		# Animation de mort
+		var tween = create_tween()
+		tween.tween_property(widget, "modulate", Color(0.3, 0.3, 0.3), 0.5)
 
 func _on_battle_ended(victory: bool, rewards: Dictionary) -> void:
 	_set_action_buttons_visible(false)
 
 	if victory:
-		message_label.text = "🎉 VICTOIRE ! 🎉\n+%d EXP, +%d Or" % [rewards.exp, rewards.gold]
+		battle_title.text = "VICTOIRE !"
+		message_label.text = "Bravo ! +%d EXP, +%d Or" % [rewards.exp, rewards.gold]
+
+		# Check for level ups and show notifications
+		await get_tree().create_timer(1.0).timeout
+		for member in party:
+			if member.is_alive():
+				# Connect to check for level up during XP distribution
+				pass
 	else:
 		if rewards.get("fled", false):
+			battle_title.text = "FUITE"
 			message_label.text = "Vous avez fui le combat..."
 		else:
-			message_label.text = "💀 DÉFAITE 💀"
+			battle_title.text = "DEFAITE"
+			message_label.text = "Vous avez ete vaincus..."
 
-	# Attendre avant de fermer
 	await get_tree().create_timer(2.0).timeout
 	battle_finished.emit(victory, rewards)
 	queue_free()
@@ -280,15 +387,13 @@ func _show_skill_selection() -> void:
 	action_buttons.visible = false
 	skill_list.visible = true
 
-	# Nettoyer
 	for child in skill_list.get_children():
 		child.queue_free()
 
-	# Ajouter les compétences
 	for skill in current_character.skills:
 		var btn = Button.new()
-		btn.text = "%s (%d MP)" % [skill.skill_name, skill.mp_cost]
-		btn.custom_minimum_size = Vector2(120, 35)
+		btn.text = "%s (%d)" % [skill.skill_name, skill.mp_cost]
+		btn.custom_minimum_size = Vector2(110, 32)
 
 		if not current_character.can_use_skill(skill):
 			btn.disabled = true
@@ -296,9 +401,8 @@ func _show_skill_selection() -> void:
 		btn.pressed.connect(_on_skill_selected.bind(skill))
 		skill_list.add_child(btn)
 
-	# Bouton retour
 	var back_btn = Button.new()
-	back_btn.text = "↩ Retour"
+	back_btn.text = "Retour"
 	back_btn.pressed.connect(func():
 		skill_list.visible = false
 		action_buttons.visible = true
@@ -327,7 +431,6 @@ func _show_target_selection(target_enemies: bool) -> void:
 	skill_list.visible = false
 	target_buttons.visible = true
 
-	# Nettoyer
 	for child in target_buttons.get_children():
 		child.queue_free()
 
@@ -335,14 +438,13 @@ func _show_target_selection(target_enemies: bool) -> void:
 
 	for target in targets:
 		var btn = Button.new()
-		btn.text = "%s (%d HP)" % [target.character_name, target.current_hp]
-		btn.custom_minimum_size = Vector2(130, 35)
+		btn.text = "%s (%d)" % [target.character_name, target.current_hp]
+		btn.custom_minimum_size = Vector2(120, 32)
 		btn.pressed.connect(_on_target_selected.bind(target))
 		target_buttons.add_child(btn)
 
-	# Bouton retour
 	var back_btn = Button.new()
-	back_btn.text = "↩ Retour"
+	back_btn.text = "Retour"
 	back_btn.pressed.connect(func():
 		target_buttons.visible = false
 		action_buttons.visible = true

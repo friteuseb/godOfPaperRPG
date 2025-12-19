@@ -31,49 +31,65 @@ enum Element { NONE, FIRE, ICE, LIGHTNING, EARTH, LIGHT, DARK }
 @export var hit_sound: String = "battle_hit"
 
 func calculate_damage(user: Character, target: Character) -> int:
-	var base_damage = base_power
-
-	# Ajouter le scaling de la stat
+	# Calculer les degats de base depuis les stats
+	var stat_damage: float = 0.0
 	match scaling_stat:
 		"strength":
-			base_damage += int(user.strength * scaling_ratio * 2)
+			stat_damage = user.strength * scaling_ratio
 		"intelligence":
-			base_damage += int(user.intelligence * scaling_ratio * 2)
+			stat_damage = user.intelligence * scaling_ratio
 		"dexterity":
-			base_damage += int(user.dexterity * scaling_ratio * 1.5)
+			stat_damage = user.dexterity * scaling_ratio * 0.8
+		_:
+			stat_damage = user.strength * 0.5
 
-	# Modificateur de niveau
-	base_damage += user.level * 3
+	# Ajouter bonus de niveau
+	stat_damage += user.level * 2
 
-	# Réduction par la défense cible
-	var defense = 0
+	# Appliquer le modificateur de puissance (base_power / 100)
+	# 100 = 100% des degats, 150 = 150% des degats
+	var power_modifier: float = base_power / 100.0
+	var base_damage: int = int(stat_damage * power_modifier)
+
+	# Reduction par la defense cible
+	var defense: float = 0.0
 	if damage_type == DamageType.PHYSICAL:
 		defense = target.defense
 	elif damage_type == DamageType.MAGICAL:
 		defense = target.magic_defense
 
-	var final_damage = max(1, base_damage - int(defense * 0.5))
+	# La defense reduit un pourcentage des degats (diminishing returns)
+	var defense_reduction: float = defense / (defense + 50.0)
+	var final_damage: int = int(base_damage * (1.0 - defense_reduction * 0.5))
+	final_damage = max(1, final_damage)
 
-	# Variation aléatoire (90% - 110%)
+	# Variation aleatoire (90% - 110%)
 	final_damage = int(final_damage * randf_range(0.9, 1.1))
 
 	return final_damage
 
 func calculate_healing(user: Character) -> int:
-	var base_heal = base_power
-
+	# Soin de base depuis les stats
+	var stat_heal: float = 0.0
 	match scaling_stat:
 		"intelligence":
-			base_heal += int(user.intelligence * scaling_ratio * 2)
+			stat_heal = user.intelligence * scaling_ratio
 		"constitution":
-			base_heal += int(user.constitution * scaling_ratio * 1.5)
+			stat_heal = user.constitution * scaling_ratio * 0.8
+		_:
+			stat_heal = user.intelligence * 0.5
 
-	base_heal += user.level * 2
+	# Bonus de niveau
+	stat_heal += user.level * 3
 
-	# Variation aléatoire
+	# Appliquer le modificateur de puissance
+	var power_modifier: float = base_power / 100.0
+	var base_heal: int = int(stat_heal * power_modifier)
+
+	# Variation aleatoire
 	base_heal = int(base_heal * randf_range(0.95, 1.05))
 
-	return base_heal
+	return max(1, base_heal)
 
 func get_description_with_values(user: Character) -> String:
 	var desc = description

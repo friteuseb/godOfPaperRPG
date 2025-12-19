@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3battle_scene"]
+[gd_scene load_steps=5 format=3 uid="uid://c3battle_scene"]
 
 [ext_resource type="Script" path="res://scripts/ui/battle_scene.gd" id="1_battle"]
-[ext_resource type="Theme" path="res://theme/game_theme.tres" id="2_theme"]
-[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/forest/grass.png" id="3_bg"]
+[ext_resource type="Theme" path="res://theme/kopp_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/tavern_floor.png" id="3_wood"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/forest/grass.png" id="4_bg"]
 
 [node name="BattleScene" type="Control"]
 layout_mode = 3
@@ -14,97 +15,141 @@ grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_battle")
 
-[node name="BackgroundLayer" type="Control" parent="."]
+[node name="RoomBackground" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 
-[node name="SkyGradient" type="ColorRect" parent="BackgroundLayer"]
+[node name="WallColor" type="ColorRect" parent="RoomBackground"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.15, 0.25, 0.18, 1)
+color = Color(0.22, 0.15, 0.10, 1)
 
-[node name="ForestBackground" type="TextureRect" parent="BackgroundLayer"]
+[node name="TableSurface" type="TextureRect" parent="RoomBackground"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource("3_bg")
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.55
+texture = ExtResource("3_wood")
 expand_mode = 1
 stretch_mode = 2
 
-[node name="ForestOverlay" type="ColorRect" parent="BackgroundLayer"]
+[node name="TableOverlay" type="ColorRect" parent="RoomBackground"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.55
+color = Color(0.35, 0.22, 0.12, 0.6)
+
+[node name="BattleFrame" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.03
+anchor_right = 0.97
+anchor_bottom = 0.53
+
+[node name="FrameBorderOuter" type="ColorRect" parent="BattleFrame"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0, 0.1, 0, 0.3)
+color = Color(0.55, 0.42, 0.25, 1)
 
-[node name="VignetteTop" type="ColorRect" parent="BackgroundLayer"]
+[node name="FrameBorderInner" type="ColorRect" parent="BattleFrame"]
 layout_mode = 1
-anchors_preset = 10
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -640.0
-offset_right = 640.0
-offset_bottom = 100.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 0.5)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = -3.0
+offset_bottom = -3.0
+color = Color(0.42, 0.30, 0.18, 1)
 
-[node name="BattleTitle" type="Label" parent="."]
+[node name="BattleBackground" type="ColorRect" parent="BattleFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+color = Color(0.12, 0.18, 0.12, 1)
+
+[node name="LocationTexture" type="TextureRect" parent="BattleFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -5.0
+texture = ExtResource("4_bg")
+expand_mode = 1
+stretch_mode = 2
+modulate = Color(0.5, 0.6, 0.4, 0.5)
+
+[node name="BattleArena" type="Control" parent="BattleFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+
+[node name="EnemyZone" type="HBoxContainer" parent="BattleFrame/BattleArena"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.02
+anchor_right = 0.95
+anchor_bottom = 0.48
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PartyZone" type="HBoxContainer" parent="BattleFrame/BattleArena"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.52
+anchor_right = 0.95
+anchor_bottom = 0.98
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="BattleTitlePanel" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -150.0
-offset_top = 10.0
-offset_right = 150.0
-offset_bottom = 50.0
+offset_left = -70.0
+offset_top = 6.0
+offset_right = 70.0
+offset_bottom = 35.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.9, 0.7, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
-theme_override_font_sizes/font_size = 28
-text = "COMBAT"
+
+[node name="BattleTitle" type="Label" parent="BattleTitlePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
+theme_override_font_sizes/font_size = 16
+text = "COMBAT !"
 horizontal_alignment = 1
-
-[node name="BattleArena" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.08
-anchor_right = 0.95
-anchor_bottom = 0.6
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="EnemyZone" type="HBoxContainer" parent="BattleArena"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.05
-anchor_right = 0.9
-anchor_bottom = 0.45
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 30
-alignment = 1
-
-[node name="PartyZone" type="HBoxContainer" parent="BattleArena"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.55
-anchor_right = 0.9
-anchor_bottom = 0.95
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 20
-alignment = 1
 
 [node name="UILayer" type="Control" parent="."]
 layout_mode = 1
@@ -115,16 +160,17 @@ anchor_bottom = 1.0
 [node name="MessagePanel" type="PanelContainer" parent="UILayer"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.62
-anchor_right = 0.9
-anchor_bottom = 0.72
+anchor_left = 0.03
+anchor_top = 0.55
+anchor_right = 0.97
+anchor_bottom = 0.64
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MessageLabel" type="Label" parent="UILayer/MessagePanel"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.92, 0.85, 0.70, 1)
+theme_override_font_sizes/font_size = 11
 text = "Le combat commence !"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -133,50 +179,54 @@ autowrap_mode = 2
 [node name="ActionPanel" type="PanelContainer" parent="UILayer"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.74
-anchor_right = 0.95
-anchor_bottom = 0.98
+anchor_left = 0.03
+anchor_top = 0.66
+anchor_right = 0.97
+anchor_bottom = 0.995
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBox" type="VBoxContainer" parent="UILayer/ActionPanel"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 4
 
 [node name="TurnLabel" type="Label" parent="UILayer/ActionPanel/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.5, 1)
-theme_override_font_sizes/font_size = 18
+theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
+theme_override_font_sizes/font_size = 12
 text = "Tour de: ???"
 horizontal_alignment = 1
 
-[node name="ActionButtons" type="HBoxContainer" parent="UILayer/ActionPanel/VBox"]
+[node name="ActionButtons" type="GridContainer" parent="UILayer/ActionPanel/VBox"]
 layout_mode = 2
-alignment = 1
+columns = 2
 
 [node name="AttackButton" type="Button" parent="UILayer/ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
 text = "Attaquer"
 
 [node name="SkillButton" type="Button" parent="UILayer/ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
 text = "Competences"
 
 [node name="ItemButton" type="Button" parent="UILayer/ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
 text = "Objets"
 
 [node name="FleeButton" type="Button" parent="UILayer/ActionPanel/VBox/ActionButtons"]
-custom_minimum_size = Vector2(140, 50)
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 11
 text = "Fuir"
 
 [node name="TargetButtons" type="HBoxContainer" parent="UILayer/ActionPanel/VBox"]
@@ -184,10 +234,10 @@ visible = false
 layout_mode = 2
 alignment = 1
 
-[node name="SkillList" type="HBoxContainer" parent="UILayer/ActionPanel/VBox"]
+[node name="SkillList" type="GridContainer" parent="UILayer/ActionPanel/VBox"]
 visible = false
 layout_mode = 2
-alignment = 1
+columns = 2
 
 [connection signal="pressed" from="UILayer/ActionPanel/VBox/ActionButtons/AttackButton" to="." method="_on_attack_pressed"]
 [connection signal="pressed" from="UILayer/ActionPanel/VBox/ActionButtons/SkillButton" to="." method="_on_skill_pressed"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1char_create"]
+[gd_scene load_steps=4 format=3 uid="uid://c1char_create"]
 
 [ext_resource type="Script" path="res://scripts/ui/character_creation.gd" id="1_char_create"]
-[ext_resource type="Theme" path="res://theme/game_theme.tres" id="2_theme"]
+[ext_resource type="Theme" path="res://theme/kopp_theme.tres" id="2_theme"]
+[ext_resource type="Texture2D" path="res://assets/sprites/backgrounds/tavern_floor.png" id="3_wood"]
 
 [node name="CharacterCreation" type="Control"]
 layout_mode = 3
@@ -13,83 +14,189 @@ grow_vertical = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_char_create")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="RoomBackground" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.12, 0.08, 0.2, 1)
 
-[node name="Title" type="Label" parent="."]
+[node name="WallColor" type="ColorRect" parent="RoomBackground"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -200.0
-offset_top = 30.0
-offset_right = 200.0
-offset_bottom = 80.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 32
-text = "Crée ton Équipe"
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.22, 0.15, 0.10, 1)
+
+[node name="TableLayer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.08
+anchor_right = 0.98
+anchor_bottom = 0.85
+
+[node name="TableShadow" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 5.0
+offset_bottom = 5.0
+color = Color(0, 0, 0, 0.45)
+
+[node name="TableSurface" type="TextureRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("3_wood")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="TableOverlay" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.38, 0.25, 0.14, 0.6)
+
+[node name="TableBorder" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.28, 0.18, 0.10, 1)
+
+[node name="TableInner" type="ColorRect" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+color = Color(0.42, 0.28, 0.16, 1)
+
+[node name="PartyPanel" type="PanelContainer" parent="TableLayer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.28
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+
+[node name="VBox" type="VBoxContainer" parent="TableLayer/PartyPanel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="TableLayer/PartyPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
+theme_override_font_sizes/font_size = 13
+text = "Ton Equipe (0/4)"
 horizontal_alignment = 1
 
-[node name="PartyPanel" type="PanelContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.15
-anchor_right = 0.45
-anchor_bottom = 0.85
-
-[node name="VBox" type="VBoxContainer" parent="PartyPanel"]
+[node name="Separator" type="HSeparator" parent="TableLayer/PartyPanel/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 10
+modulate = Color(0.55, 0.42, 0.25, 1)
 
-[node name="Label" type="Label" parent="PartyPanel/VBox"]
-layout_mode = 2
-text = "Ton Équipe (0/4)"
-
-[node name="PartyList" type="VBoxContainer" parent="PartyPanel/VBox"]
+[node name="PartyList" type="VBoxContainer" parent="TableLayer/PartyPanel/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 3
 
-[node name="ClassPanel" type="PanelContainer" parent="."]
+[node name="ClassPanel" type="PanelContainer" parent="TableLayer"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.15
-anchor_right = 0.95
-anchor_bottom = 0.85
+anchor_left = 0.02
+anchor_top = 0.30
+anchor_right = 0.98
+anchor_bottom = 0.98
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
 
-[node name="VBox" type="VBoxContainer" parent="ClassPanel"]
+[node name="VBox" type="VBoxContainer" parent="TableLayer/ClassPanel"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 4
 
-[node name="Label" type="Label" parent="ClassPanel/VBox"]
+[node name="Label" type="Label" parent="TableLayer/ClassPanel/VBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
+theme_override_font_sizes/font_size = 13
 text = "Choisir une Classe"
+horizontal_alignment = 1
 
-[node name="ClassList" type="VBoxContainer" parent="ClassPanel/VBox"]
+[node name="Separator" type="HSeparator" parent="TableLayer/ClassPanel/VBox"]
+layout_mode = 2
+modulate = Color(0.55, 0.42, 0.25, 1)
+
+[node name="ClassScroll" type="ScrollContainer" parent="TableLayer/ClassPanel/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
+horizontal_scroll_mode = 0
 
-[node name="NameInput" type="HBoxContainer" parent="ClassPanel/VBox"]
+[node name="ClassList" type="VBoxContainer" parent="TableLayer/ClassPanel/VBox/ClassScroll"]
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
 
-[node name="Label" type="Label" parent="ClassPanel/VBox/NameInput"]
+[node name="NameInput" type="HBoxContainer" parent="TableLayer/ClassPanel/VBox"]
 layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="TableLayer/ClassPanel/VBox/NameInput"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.78, 0.62, 1)
+theme_override_font_sizes/font_size = 11
 text = "Nom:"
 
-[node name="LineEdit" type="LineEdit" parent="ClassPanel/VBox/NameInput"]
+[node name="LineEdit" type="LineEdit" parent="TableLayer/ClassPanel/VBox/NameInput"]
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Nom du personnage"
 max_length = 20
 
-[node name="AddButton" type="Button" parent="ClassPanel/VBox"]
+[node name="AddButton" type="Button" parent="TableLayer/ClassPanel/VBox"]
+custom_minimum_size = Vector2(0, 38)
 layout_mode = 2
-text = "Ajouter à l'équipe"
+theme_override_font_sizes/font_size = 12
+text = "Ajouter a l'equipe"
+
+[node name="TitlePanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 10.0
+offset_right = 120.0
+offset_bottom = 55.0
+grow_horizontal = 2
+
+[node name="TitleVBox" type="VBoxContainer" parent="TitlePanel"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Title" type="Label" parent="TitlePanel/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.85, 0.55, 1)
+theme_override_font_sizes/font_size = 18
+text = "Cree ton Equipe"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="TitlePanel/TitleVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.65, 0.50, 1)
+theme_override_font_sizes/font_size = 10
+text = "Choisis tes heros pour l'aventure"
+horizontal_alignment = 1
 
 [node name="StartButton" type="Button" parent="."]
 layout_mode = 1
@@ -99,11 +206,12 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -100.0
-offset_top = -70.0
+offset_top = -50.0
 offset_right = 100.0
-offset_bottom = -20.0
+offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_font_sizes/font_size = 13
 text = "Commencer l'Aventure"
 
 [node name="BackButton" type="Button" parent="."]
@@ -111,13 +219,14 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -70.0
-offset_right = 120.0
-offset_bottom = -20.0
+offset_left = 15.0
+offset_top = -50.0
+offset_right = 100.0
+offset_bottom = -10.0
 grow_vertical = 0
+theme_override_font_sizes/font_size = 11
 text = "Retour"
 
-[connection signal="pressed" from="ClassPanel/VBox/AddButton" to="." method="_on_add_character_pressed"]
+[connection signal="pressed" from="TableLayer/ClassPanel/VBox/AddButton" to="." method="_on_add_character_pressed"]
 [connection signal="pressed" from="StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_pressed"]

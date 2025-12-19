@@ -22,13 +22,15 @@ GameManager="*res://scripts/core/game_manager.gd"
 BattleManager="*res://scripts/battle/battle_manager.gd"
 DataManager="*res://scripts/data/data_manager.gd"
 AudioManager="*res://scripts/core/audio_manager.gd"
+QuestManager="*res://scripts/core/quest_manager.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=540
+window/size/viewport_height=960
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
+window/handheld/orientation=1
 
 [input]
 
