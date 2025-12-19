@@ -4,18 +4,18 @@ extends Control
 
 signal battle_finished(victory: bool, rewards: Dictionary)
 
-@onready var enemy_zone: HBoxContainer = $BattleFrame/BattleArena/EnemyZone
-@onready var party_zone: HBoxContainer = $BattleFrame/BattleArena/PartyZone
+@onready var enemy_zone: HBoxContainer = $BattleArena/EnemyZone
+@onready var party_zone: HBoxContainer = $BattleArena/PartyZone
 @onready var message_label: Label = $UILayer/MessagePanel/MessageLabel
 @onready var turn_label: Label = $UILayer/ActionPanel/VBox/TurnLabel
 @onready var action_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/ActionButtons
 @onready var target_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/TargetButtons
 @onready var skill_list: HBoxContainer = $UILayer/ActionPanel/VBox/SkillList
-@onready var battle_title: Label = $BattleTitlePanel/BattleTitle
+@onready var battle_title: Label = $BattleTitle
 
 # Alias pour compatibilite
-@onready var enemy_list: HBoxContainer = $BattleFrame/BattleArena/EnemyZone
-@onready var party_list: HBoxContainer = $BattleFrame/BattleArena/PartyZone
+@onready var enemy_list: HBoxContainer = $BattleArena/EnemyZone
+@onready var party_list: HBoxContainer = $BattleArena/PartyZone
 
 var party: Array[Character] = []
 var enemies: Array[Character] = []
