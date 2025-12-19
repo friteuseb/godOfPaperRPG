@@ -164,8 +164,7 @@ func level_up() -> void:
 				skills.append(skill_data.skill)
 
 	# Son de level up
-	if Engine.has_singleton("AudioManager") or (is_inside_tree() and has_node("/root/AudioManager")):
-		AudioManager.play_level_up()
+	AudioManager.play_level_up()
 	leveled_up.emit(level)
 
 func add_status_effect(effect: StatusEffect) -> void:
