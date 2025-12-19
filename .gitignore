@@ -1,0 +1,58 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Godot-specific ignores
+*.translation
+
+# Imported textures (auto-generated)
+*.import
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# OS-specific ignores
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Downloaded assets (keep the DL folder out of repo)
+DL/
+
+# Editor-specific
+*.swp
+*.swo
+*~
+
+# Export builds
+export/
+*.pck
+*.zip
+
+# Android export
+*.apk
+android/
+
+# iOS export
+*.ipa
+ios/
+
+# Web export
+*.html
+*.wasm
+
+# Windows export
+*.exe
+
+# macOS export
+*.app/
+*.dmg
+
+# Linux export
+*.x86_64
+*.x86

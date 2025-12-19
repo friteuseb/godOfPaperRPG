@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Consumable" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/consumable.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/rum_bottle.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_script")
+item_name = "Elixir"
+description = "Restaure 100 HP et 50 MP."
+icon = ExtResource("2_icon")
+item_type = 0
+price = 200
+sell_price = 100
+stackable = true
+max_stack = 99
+effect = 2
+effect_value = 100
+effect_percent = 0.0
+status_to_cure = ""
+usable_in_battle = true
+usable_outside_battle = true

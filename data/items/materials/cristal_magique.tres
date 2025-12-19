@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/item.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/crystal_magic.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_script")
+item_name = "Cristal Magique"
+description = "Un cristal imbu de magie pure."
+icon = ExtResource("2_icon")
+item_type = 3
+price = 300
+sell_price = 150
+stackable = true
+max_stack = 99

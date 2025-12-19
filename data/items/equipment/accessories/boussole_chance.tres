@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="Equipment" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/equipment.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/compass.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_script")
+item_name = "Boussole de Chance"
+description = "Une boussole magique qui porte chance."
+icon = ExtResource("2_icon")
+item_type = 1
+price = 200
+sell_price = 100
+stackable = false
+max_stack = 1
+slot = "accessory"
+attack_bonus = 0
+defense_bonus = 0
+magic_attack_bonus = 0
+magic_defense_bonus = 0
+speed_bonus = 2
+max_hp_bonus = 0
+max_mp_bonus = 0
+critical_chance_bonus = 0.08
+dodge_chance_bonus = 0.08
+required_level = 4

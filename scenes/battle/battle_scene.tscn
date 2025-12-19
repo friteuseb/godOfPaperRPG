@@ -1,0 +1,135 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3battle_scene"]
+
+[ext_resource type="Script" path="res://scripts/ui/battle_scene.gd" id="1_battle"]
+
+[node name="BattleScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_battle")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.8)
+
+[node name="BattlePanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+
+[node name="VBox" type="VBoxContainer" parent="BattlePanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TitleLabel" type="Label" parent="BattlePanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "⚔️ COMBAT ⚔️"
+horizontal_alignment = 1
+
+[node name="BattleArea" type="HSplitContainer" parent="BattlePanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EnemyPanel" type="PanelContainer" parent="BattlePanel/VBox/BattleArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="BattlePanel/VBox/BattleArea/EnemyPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="BattlePanel/VBox/BattleArea/EnemyPanel/VBox"]
+layout_mode = 2
+text = "Ennemis"
+horizontal_alignment = 1
+
+[node name="EnemyList" type="VBoxContainer" parent="BattlePanel/VBox/BattleArea/EnemyPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PartyPanel" type="PanelContainer" parent="BattlePanel/VBox/BattleArea"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="BattlePanel/VBox/BattleArea/PartyPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="BattlePanel/VBox/BattleArea/PartyPanel/VBox"]
+layout_mode = 2
+text = "Votre Équipe"
+horizontal_alignment = 1
+
+[node name="PartyList" type="VBoxContainer" parent="BattlePanel/VBox/BattleArea/PartyPanel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MessagePanel" type="PanelContainer" parent="BattlePanel/VBox"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="BattlePanel/VBox/MessagePanel"]
+layout_mode = 2
+text = "Le combat commence !"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ActionPanel" type="PanelContainer" parent="BattlePanel/VBox"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="VBox" type="VBoxContainer" parent="BattlePanel/VBox/ActionPanel"]
+layout_mode = 2
+
+[node name="TurnLabel" type="Label" parent="BattlePanel/VBox/ActionPanel/VBox"]
+layout_mode = 2
+text = "Tour de: ???"
+horizontal_alignment = 1
+
+[node name="ActionButtons" type="HBoxContainer" parent="BattlePanel/VBox/ActionPanel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="AttackButton" type="Button" parent="BattlePanel/VBox/ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "⚔️ Attaquer"
+
+[node name="SkillButton" type="Button" parent="BattlePanel/VBox/ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "✨ Compétences"
+
+[node name="ItemButton" type="Button" parent="BattlePanel/VBox/ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "🎒 Objets"
+
+[node name="FleeButton" type="Button" parent="BattlePanel/VBox/ActionPanel/VBox/ActionButtons"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+text = "🏃 Fuir"
+
+[node name="TargetButtons" type="HBoxContainer" parent="BattlePanel/VBox/ActionPanel/VBox"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="SkillList" type="HBoxContainer" parent="BattlePanel/VBox/ActionPanel/VBox"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[connection signal="pressed" from="BattlePanel/VBox/ActionPanel/VBox/ActionButtons/AttackButton" to="." method="_on_attack_pressed"]
+[connection signal="pressed" from="BattlePanel/VBox/ActionPanel/VBox/ActionButtons/SkillButton" to="." method="_on_skill_pressed"]
+[connection signal="pressed" from="BattlePanel/VBox/ActionPanel/VBox/ActionButtons/ItemButton" to="." method="_on_item_pressed"]
+[connection signal="pressed" from="BattlePanel/VBox/ActionPanel/VBox/ActionButtons/FleeButton" to="." method="_on_flee_pressed"]
