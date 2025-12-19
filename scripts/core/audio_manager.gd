@@ -138,3 +138,39 @@ func play_gold_gain() -> void:
 
 func play_quest_complete() -> void:
 	play_sfx("quest_complete")
+
+# Sons de combat additionnels
+func play_battle_hit_random() -> void:
+	var hits = ["battle_hit", "battle_hit_2", "battle_hit_3"]
+	play_sfx(hits[randi() % hits.size()], 0.15)
+
+func play_sword_slash() -> void:
+	play_sfx("sword_slash", 0.1)
+
+func play_heal() -> void:
+	play_sfx("heal")
+
+func play_fire_spell() -> void:
+	play_sfx("fire_spell")
+
+func play_magic_buff() -> void:
+	play_sfx("magic_buff")
+
+func play_stats_up() -> void:
+	play_sfx("stats_up")
+
+# Sons d'interface additionnels
+func play_ui_denied() -> void:
+	play_sfx("ui_denied")
+
+# Sons de victoire/défaite
+func play_victory() -> void:
+	play_sfx("victory")
+
+func play_defeat() -> void:
+	play_sfx("defeat")
+
+# Sons d'environnement
+func play_footstep(surface: String = "grass") -> void:
+	var sfx_name = "footstep_%s" % surface
+	play_sfx(sfx_name, 0.2)

@@ -43,6 +43,7 @@ func add_gold(amount: int) -> void:
 	gold += amount
 	if amount > 0:
 		stats.gold_earned += amount
+		AudioManager.play_gold_gain()
 	gold_changed.emit(gold)
 
 func spend_gold(amount: int) -> bool:

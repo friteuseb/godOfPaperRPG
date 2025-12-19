@@ -128,6 +128,9 @@ func turn_in_quest(quest: Quest) -> bool:
 	active_quests.erase(quest)
 	completed_quests.append(quest.quest_id)
 
+	# Son de quête terminée
+	AudioManager.play_quest_complete()
+
 	quest_turned_in.emit(quest)
 	return true
 

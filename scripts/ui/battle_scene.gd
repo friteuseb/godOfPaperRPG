@@ -301,6 +301,15 @@ func _on_message_displayed(message: String) -> void:
 
 func _on_damage_dealt(target: Character, amount: int, is_critical: bool) -> void:
 	_update_character_widget(target)
+	# Jouer le son de dégâts
+	if amount > 0:
+		if is_critical:
+			AudioManager.play_battle_critical()
+		else:
+			AudioManager.play_battle_hit_random()
+	else:
+		# Soin
+		AudioManager.play_heal()
 	# Animation de degats
 	_show_damage_popup(target, amount, is_critical)
 
@@ -333,6 +342,9 @@ func _show_damage_popup(target: Character, amount: int, is_critical: bool) -> vo
 
 func _on_character_died(character: Character) -> void:
 	_update_character_widget(character)
+	# Son de mort différent pour allié ou ennemi
+	if character in enemies:
+		AudioManager.play_sfx("defeat", 0.1)
 	var widget = party_widgets.get(character)
 	if not widget:
 		widget = enemy_widgets.get(character)
@@ -345,6 +357,7 @@ func _on_battle_ended(victory: bool, rewards: Dictionary) -> void:
 	_set_action_buttons_visible(false)
 
 	if victory:
+		AudioManager.play_victory()
 		battle_title.text = "VICTOIRE !"
 		message_label.text = "Bravo ! +%d EXP, +%d Or" % [rewards.exp, rewards.gold]
 
@@ -356,9 +369,11 @@ func _on_battle_ended(victory: bool, rewards: Dictionary) -> void:
 				pass
 	else:
 		if rewards.get("fled", false):
+			AudioManager.play_battle_miss()
 			battle_title.text = "FUITE"
 			message_label.text = "Vous avez fui le combat..."
 		else:
+			AudioManager.play_defeat()
 			battle_title.text = "DEFAITE"
 			message_label.text = "Vous avez ete vaincus..."
 
@@ -457,6 +472,10 @@ func _on_target_selected(target: Character) -> void:
 	_execute_skill_on_targets([target])
 
 func _execute_skill_on_targets(targets: Array) -> void:
+	# Son de compétence
+	if selected_skill and selected_skill.mp_cost > 0:
+		AudioManager.play_spell_cast()
+
 	var action = BattleAction.new()
 	action.user = current_character
 	action.skill = selected_skill
