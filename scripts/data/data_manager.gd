@@ -16,7 +16,8 @@ func _ready() -> void:
 func _load_all_data() -> void:
 	_load_resources("res://resources/classes", character_classes)
 	_load_resources("res://resources/skills", skills)
-	_load_resources("res://resources/items", items)
+	# Charger les items depuis le nouveau dossier data/items
+	_load_resources_recursive("res://data/items", items)
 	_load_resources("res://resources/enemies", enemies)
 	_load_resources("res://resources/quests", quests)
 
@@ -40,6 +41,25 @@ func _load_resources(path: String, target: Dictionary) -> void:
 				if resource:
 					var key = file_name.get_basename()
 					target[key] = resource
+			file_name = dir.get_next()
+		dir.list_dir_end()
+
+func _load_resources_recursive(path: String, target: Dictionary) -> void:
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			var full_path = path + "/" + file_name
+			if dir.current_is_dir() and not file_name.begins_with("."):
+				# Charger récursivement les sous-dossiers
+				_load_resources_recursive(full_path, target)
+			elif file_name.ends_with(".tres"):
+				var resource = load(full_path)
+				if resource:
+					var key = file_name.get_basename()
+					target[key] = resource
+					print("[DataManager] Loaded item: %s" % key)
 			file_name = dir.get_next()
 		dir.list_dir_end()
 
@@ -104,9 +124,15 @@ func get_random_enemies_for_area(area: String, count: int = 3) -> Array[Characte
 
 func add_starting_items() -> void:
 	# Ajouter des objets de départ
-	var potion = get_item("potion_small")
-	if potion:
-		party_inventory.add_item(potion, 3)
+	var potion_hp = get_item("potion_hp_small")
+	if potion_hp:
+		party_inventory.add_item(potion_hp, 3)
+
+	var potion_mp = get_item("potion_mp_small")
+	if potion_mp:
+		party_inventory.add_item(potion_mp, 2)
+
+	print("[DataManager] Starting items added. Inventory has %d slots" % party_inventory.get_slot_count())
 
 func get_all_classes() -> Array:
 	return character_classes.values()
