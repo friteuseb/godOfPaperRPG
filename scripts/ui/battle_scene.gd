@@ -8,9 +8,9 @@ signal battle_finished(victory: bool, rewards: Dictionary)
 @onready var party_zone: HBoxContainer = $BattleFrame/BattleArena/PartyZone
 @onready var message_label: Label = $UILayer/MessagePanel/MessageLabel
 @onready var turn_label: Label = $UILayer/ActionPanel/VBox/TurnLabel
-@onready var action_buttons: GridContainer = $UILayer/ActionPanel/VBox/ActionButtons
+@onready var action_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/ActionButtons
 @onready var target_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/TargetButtons
-@onready var skill_list: GridContainer = $UILayer/ActionPanel/VBox/SkillList
+@onready var skill_list: HBoxContainer = $UILayer/ActionPanel/VBox/SkillList
 @onready var battle_title: Label = $BattleTitlePanel/BattleTitle
 
 # Alias pour compatibilite
