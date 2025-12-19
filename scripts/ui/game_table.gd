@@ -1,5 +1,5 @@
 extends Control
-## Scène principale du jeu - La table de JDR
+## Scène principale du jeu - La table de JDR avec environnements dynamiques
 
 @onready var party_area: HBoxContainer = $TableTop/GameArea/PartyArea
 @onready var enemy_area: HBoxContainer = $TableTop/GameArea/EnemyArea
@@ -8,14 +8,46 @@ extends Control
 @onready var gold_label: Label = $TopBar/GoldPanel/GoldLabel
 @onready var time_label: Label = $TopBar/TimePanel/TimeLabel
 @onready var action_buttons: HBoxContainer = $ActionPanel/VBox/ActionButtons
+@onready var location_background: TextureRect = $BackgroundLayer/LocationBackground
+@onready var base_background: ColorRect = $BackgroundLayer/BaseBackground
 
 var current_location: String = "tavern"
 var locations: Dictionary = {
-	"tavern": {"name": "🏰 Taverne du Dragon Doré", "can_rest": true, "can_shop": true},
-	"forest": {"name": "🌲 Forêt Sombre", "enemy_level": 1, "enemies": ["goblin", "wolf"]},
-	"dungeon": {"name": "🏚️ Donjon Abandonné", "enemy_level": 3, "enemies": ["skeleton", "bat", "spider"]},
-	"mountain": {"name": "⛰️ Mont Périlleux", "enemy_level": 5, "enemies": ["orc", "troll"]},
-	"castle": {"name": "🏯 Château Maudit", "enemy_level": 8, "enemies": ["dark_knight", "ghost", "demon"]}
+	"tavern": {
+		"name": "Taverne du Dragon Dore",
+		"can_rest": true,
+		"can_shop": true,
+		"bg_color": Color(0.15, 0.1, 0.12, 1),
+		"bg_modulate": Color(0.4, 0.3, 0.25, 0.3)
+	},
+	"forest": {
+		"name": "Foret Sombre",
+		"enemy_level": 1,
+		"enemies": ["goblin", "wolf", "mushroom", "slime"],
+		"bg_color": Color(0.08, 0.15, 0.08, 1),
+		"bg_modulate": Color(0.4, 0.6, 0.3, 0.5)
+	},
+	"dungeon": {
+		"name": "Donjon Abandonne",
+		"enemy_level": 3,
+		"enemies": ["skeleton", "bat", "spider"],
+		"bg_color": Color(0.1, 0.08, 0.12, 1),
+		"bg_modulate": Color(0.3, 0.25, 0.35, 0.4)
+	},
+	"mountain": {
+		"name": "Mont Perilleux",
+		"enemy_level": 5,
+		"enemies": ["orc", "troll"],
+		"bg_color": Color(0.12, 0.12, 0.15, 1),
+		"bg_modulate": Color(0.5, 0.5, 0.6, 0.4)
+	},
+	"castle": {
+		"name": "Chateau Maudit",
+		"enemy_level": 8,
+		"enemies": ["dark_knight", "ghost", "demon"],
+		"bg_color": Color(0.08, 0.05, 0.1, 1),
+		"bg_modulate": Color(0.3, 0.2, 0.4, 0.5)
+	}
 }
 
 var character_card_scene: PackedScene
@@ -143,6 +175,19 @@ func _update_location_display() -> void:
 	$ActionPanel/VBox/ActionButtons/RestButton.visible = can_rest
 	$ActionPanel/VBox/ActionButtons/ShopButton.visible = can_shop
 
+	# Mettre à jour le fond selon la localisation
+	_update_background(loc_data)
+
+func _update_background(loc_data: Dictionary) -> void:
+	var bg_color = loc_data.get("bg_color", Color(0.12, 0.08, 0.15, 1))
+	var bg_modulate = loc_data.get("bg_modulate", Color(0.5, 0.5, 0.5, 0.3))
+
+	# Animation fluide du changement de couleur
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(base_background, "color", bg_color, 0.5)
+	tween.tween_property(location_background, "modulate", bg_modulate, 0.5)
+
 func _show_message(text: String) -> void:
 	message_label.text = text
 
@@ -240,6 +285,19 @@ func _create_enemy(template_name: String, base_level: int) -> Character:
 			enemy.strength = 10 + level
 			enemy.dexterity = 12 + level
 			enemy.constitution = 5 + level
+		"mushroom":
+			enemy.character_name = "Champignon"
+			enemy.max_hp = 30 + (level * 8)
+			enemy.strength = 6 + level
+			enemy.dexterity = 4 + level
+			enemy.constitution = 10 + level
+			enemy.intelligence = 5 + level
+		"slime":
+			enemy.character_name = "Slime"
+			enemy.max_hp = 45 + (level * 12)
+			enemy.strength = 5 + level
+			enemy.dexterity = 3 + level
+			enemy.constitution = 15 + level
 		"skeleton":
 			enemy.character_name = "Squelette"
 			enemy.max_hp = 50 + (level * 12)

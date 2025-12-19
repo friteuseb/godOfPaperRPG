@@ -1,15 +1,19 @@
 extends Control
-## Interface de combat
+## Interface de combat avec fond de forêt
 
 signal battle_finished(victory: bool, rewards: Dictionary)
 
-@onready var enemy_list: VBoxContainer = $BattlePanel/VBox/BattleArea/EnemyPanel/VBox/EnemyList
-@onready var party_list: VBoxContainer = $BattlePanel/VBox/BattleArea/PartyPanel/VBox/PartyList
-@onready var message_label: Label = $BattlePanel/VBox/MessagePanel/MessageLabel
-@onready var turn_label: Label = $BattlePanel/VBox/ActionPanel/VBox/TurnLabel
-@onready var action_buttons: HBoxContainer = $BattlePanel/VBox/ActionPanel/VBox/ActionButtons
-@onready var target_buttons: HBoxContainer = $BattlePanel/VBox/ActionPanel/VBox/TargetButtons
-@onready var skill_list: HBoxContainer = $BattlePanel/VBox/ActionPanel/VBox/SkillList
+@onready var enemy_zone: HBoxContainer = $BattleArena/EnemyZone
+@onready var party_zone: HBoxContainer = $BattleArena/PartyZone
+@onready var message_label: Label = $UILayer/MessagePanel/MessageLabel
+@onready var turn_label: Label = $UILayer/ActionPanel/VBox/TurnLabel
+@onready var action_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/ActionButtons
+@onready var target_buttons: HBoxContainer = $UILayer/ActionPanel/VBox/TargetButtons
+@onready var skill_list: HBoxContainer = $UILayer/ActionPanel/VBox/SkillList
+
+# Alias pour compatibilité
+@onready var enemy_list: HBoxContainer = $BattleArena/EnemyZone
+@onready var party_list: HBoxContainer = $BattleArena/PartyZone
 
 var party: Array[Character] = []
 var enemies: Array[Character] = []
